@@ -6,7 +6,14 @@ type Filter struct {
 	// TODO: implement me
 }
 
+type AuthorType int
+const (
+	AuthorT AuthorType = iota
+	CommitterT
+)
+
 type Context struct {
+	AuthorType AuthorType
 	Revision   string
 	CurrentDir string
 	Filter     Filter
@@ -24,6 +31,8 @@ type Commit struct {
 	AuthorName string
 	Lines      int
 }
+
+type CommitDict = map[string]*Commit
 
 func (f *Filter) IsFiltered(string) bool {
 	// TODO: implement me
