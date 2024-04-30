@@ -1,16 +1,15 @@
-package gitfame.process
+package process
 
-
-import strings
+import "strings"
 
 func (c *Context) ParseTree() []string {
-	result, err := c.ExecuteCommand(
-		"git", "ls-tree", "--name-only", "-r", c.Revision
+	response, err := c.ExecuteCommand(
+		"git", "ls-tree", "--name-only", "-r", c.Revision,
 	)
 
-	result := make([]string)
-	for filename := range strings.Split(result, "\n") {
-		if c.Filter(filename) {
+	result := make([]string, 0)
+	for _, filename := range strings.Split(response, "\n") {
+		if c.Filter.IsFiltered(filename) {
 			result = append(result, filename)
 		}
 	}

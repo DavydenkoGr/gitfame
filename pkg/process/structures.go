@@ -1,32 +1,40 @@
-package gitfame.process
+package process
 
-import os/exec
+import "os/exec"
 
-struct Filter {
+type Filter struct {
 	// TODO: implement me
 }
 
-
 type Context struct {
-	Revision string
+	Revision   string
 	CurrentDir string
-	Filter Filter
+	Filter     Filter
 	// TODO: add new fields
 }
 
 type Author struct {
-	Name string
-	Lines int
+	Name    string
+	Lines   int
 	Commits int
-	Files int
+	Files   int
 }
 
-func (f *Filter) IsFiltered(string) {
+type Commit struct {
+	AuthorName string
+	Lines      int
+}
+
+func (f *Filter) IsFiltered(string) bool {
 	// TODO: implement me
+
+	return true
 }
 
-func (c *Context) ExecuteCommand(command string, args ...string) {
-	command := exec.Command(command, args...)
-	exec.Dir(c.CurrentDir)
-	return command.Output()
+func (c *Context) ExecuteCommand(name string, args ...string) (string, error) {
+	command := exec.Command(name, args...)
+	command.Dir = c.CurrentDir
+	result, err := command.Output()
+
+	return string(result), err
 }
