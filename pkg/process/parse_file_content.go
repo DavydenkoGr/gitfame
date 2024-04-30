@@ -3,7 +3,7 @@ package process
 import "strings"
 
 // method parses file content and count every author lines for all commits
-func (c *Context) ParseFile(filename string) CommitDict {
+func (c *Context) ParseFileContent(filename string) CommitDict {
 	response, err := c.ExecuteCommand(
 		"git", "blame", "--porcelain", c.Revision,
 	)
