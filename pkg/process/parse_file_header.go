@@ -1,6 +1,6 @@
 package process
 
-func (c *Context) ParseFileHeader(filename string) CommitDict {
+func (c *Context) ParseFileHeader(filename string) map[string]string {
 	hash, err := c.ExecuteCommand(
 		"git", "log", "--format=%H", "-n 1", filename,
 	)
@@ -9,11 +9,8 @@ func (c *Context) ParseFileHeader(filename string) CommitDict {
 		"git", "log", "--format=%an", "-n 1", filename,
 	)
 
-	cd := make(CommitDict)
-	cd[hash] = &Commit{
-		AuthorName: author,
-		Lines: 0,
+	return map[string]string{
+		"hash": hash,
+		"author": author,
 	}
-
-	return cd
 }

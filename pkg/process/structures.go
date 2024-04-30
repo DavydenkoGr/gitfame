@@ -33,6 +33,7 @@ type Commit struct {
 }
 
 type CommitDict = map[string]*Commit
+type AuthorDict = map[string]*Author
 
 func (f *Filter) IsFiltered(string) bool {
 	// TODO: implement me
