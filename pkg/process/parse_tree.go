@@ -2,6 +2,7 @@ package process
 
 import "strings"
 
+// method parses git repo tree 
 func (c *Context) ParseTree() []string {
 	response, err := c.ExecuteCommand(
 		"git", "ls-tree", "--name-only", "-r", c.Revision,

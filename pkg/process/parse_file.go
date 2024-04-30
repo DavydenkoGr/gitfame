@@ -2,12 +2,14 @@ package process
 
 import "strings"
 
+// method parses file content and count every author lines for all commits
 func (c *Context) ParseFile(filename string) CommitDict {
 	response, err := c.ExecuteCommand(
 		"git", "blame", "--porcelain", c.Revision,
 	)
 
 	commitDict := make(CommitDict)
+	// empty file
 	if len(response) == 0 {
 		return commitDict
 	}
@@ -17,16 +19,15 @@ func (c *Context) ParseFile(filename string) CommitDict {
 
 	// parse commits info
 	for line := lines[lineIndex]; lineIndex < len(lines); lineIndex++ {
-		if len(line) == 0 {
-			break
-		}
-
 		if c.AuthorType == AuthorT && strings.HasPrefix(line, "author ") {
 			hash := strings.Split(lines[lineIndex - 1], " ")[0]
 
 			commitDict[hash] = &Commit{
 				AuthorName: line[7:],
+				Lines: 1,
 			}
+
+			continue
 		}
 
 		if c.AuthorType == CommitterT && strings.HasPrefix(line, "committer ") {
@@ -34,13 +35,17 @@ func (c *Context) ParseFile(filename string) CommitDict {
 
 			commitDict[hash] = &Commit{
 				AuthorName: line[10:],
+				Lines: 1,
 			}
-		}
-	}
 
-	for line := lines[lineIndex]; lineIndex < len(lines); lineIndex += 2 {
+			continue
+		}
+
+		// count lines
 		hash := strings.Split(line, " ")[0]
-		commitDict[hash].Lines++
+		if _, ok := commitDict[hash]; ok {
+			commitDict[hash].Lines++
+		}
 	}
 	
 	return commitDict
