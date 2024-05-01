@@ -10,6 +10,7 @@ func (c *Context) ParseTree() []string {
 
 	result := make([]string, 0)
 	for _, filename := range strings.Split(response, "\n") {
+
 		if c.Filter.IsFiltered(filename) {
 			result = append(result, filename)
 		}

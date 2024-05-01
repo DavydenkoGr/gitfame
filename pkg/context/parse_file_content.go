@@ -9,7 +9,7 @@ import (
 // method parses file content and count every author lines for all commits
 func (c *Context) ParseFileContent(filename string) commit.CommitDict {
 	response, _ := c.ExecuteCommand(
-		"git", "blame", "--porcelain", c.Revision,
+		"git", "blame", "--porcelain", c.Revision, filename,
 	)
 
 	commitDict := make(commit.CommitDict)
@@ -22,7 +22,9 @@ func (c *Context) ParseFileContent(filename string) commit.CommitDict {
 	lineIndex := 0
 
 	// parse commits info
-	for line := lines[lineIndex]; lineIndex < len(lines); lineIndex++ {
+	for ; lineIndex < len(lines); lineIndex++ {
+		line := lines[lineIndex]
+
 		if c.AuthorType == author.AuthorT && strings.HasPrefix(line, "author ") {
 			hash := strings.Split(lines[lineIndex - 1], " ")[0]
 
