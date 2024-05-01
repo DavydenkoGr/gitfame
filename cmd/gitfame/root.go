@@ -6,17 +6,18 @@ import (
 
 	"github.com/spf13/cobra"
 	// "github.com/spf13/viper"
-	"github.com/DavydenkoGr/gitfame/pkg/process"
+	"github.com/DavydenkoGr/gitfame/pkg/context"
+	"github.com/DavydenkoGr/gitfame/pkg/filter"
+	"github.com/DavydenkoGr/gitfame/pkg/formatter"
 )
 
 var (
 	// Used for flags.
-	filter = &process.Filter{}
-	formatter = &process.Formatter{}
-
-	appContext = &process.Context{
-		Filter: filter,
-		Formatter: formatter,
+	appFilter = &filter.Filter{}
+	appFormatter = &formatter.Formatter{}
+	appContext = &context.Context{
+		Filter: appFilter,
+		Formatter: appFormatter,
 	}
 
 	rootCmd = &cobra.Command{
@@ -41,18 +42,18 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&appContext.Revision, "revision", "HEAD", "revision")
 
 	if *rootCmd.PersistentFlags().Bool("use-committer", false, "use-committer") {
-		appContext.AuthorType = process.CommitterT
+		appContext.AuthorType = context.CommitterT
 	} else {
-		appContext.AuthorType = process.AuthorT
+		appContext.AuthorType = context.AuthorT
 	}
 
-	rootCmd.PersistentFlags().StringSliceVar(&filter.Extensions, "extensions", []string{}, "extensions")
-	rootCmd.PersistentFlags().StringSliceVar(&filter.Languages, "languages", []string{}, "languages")
-	rootCmd.PersistentFlags().StringSliceVar(&filter.Exclude, "exclude", []string{}, "exclude")
-	rootCmd.PersistentFlags().StringSliceVar(&filter.RestrictTo, "restrict-to", []string{}, "restrict-to")
+	rootCmd.PersistentFlags().StringSliceVar(&appFilter.Extensions, "extensions", []string{}, "extensions")
+	rootCmd.PersistentFlags().StringSliceVar(&appFilter.Languages, "languages", []string{}, "languages")
+	rootCmd.PersistentFlags().StringSliceVar(&appFilter.Exclude, "exclude", []string{}, "exclude")
+	rootCmd.PersistentFlags().StringSliceVar(&appFilter.RestrictTo, "restrict-to", []string{}, "restrict-to")
 
-	rootCmd.PersistentFlags().StringVar(&formatter.Format, "format", "tabular", "format")
-	rootCmd.PersistentFlags().StringVar(&formatter.OrderBy, "order-by", "lines", "order-by")
+	rootCmd.PersistentFlags().StringVar(&appFormatter.Format, "format", "tabular", "format")
+	rootCmd.PersistentFlags().StringVar(&appFormatter.OrderBy, "order-by", "lines", "order-by")
 
 	// rootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "author name for copyright attribution")
 	// rootCmd.PersistentFlags().StringVarP(&userLicense, "license", "l", "", "name of license for the project")

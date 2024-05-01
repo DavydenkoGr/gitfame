@@ -1,4 +1,4 @@
-package process
+package context
 
 func (c *Context) ParseRepository() AuthorDict {
 	filenames := c.ParseTree()

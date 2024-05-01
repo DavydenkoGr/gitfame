@@ -1,4 +1,4 @@
-package process
+package context
 
 func (c *Context) ParseFileHeader(filename string) map[string]string {
 	hash, err := c.ExecuteCommand(
