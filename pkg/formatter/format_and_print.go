@@ -1,6 +1,7 @@
 package formatter
 
 import (
+	"encoding/json"
 	"encoding/csv"
 	"fmt"
 	"github.com/DavydenkoGr/gitfame/pkg/author"
@@ -28,9 +29,9 @@ func (f *Formatter) FormatAndPrint(authorDict author.AuthorDict) {
 	case "csv":
 		printCSV(authors)
 	case "json":
-		return
+		printJSON(authors)
 	case "json-lines":
-		return
+		printJSONLines(authors)
 	}
 }
 
@@ -72,4 +73,16 @@ func printCSV(authors sorter.Authors) {
 
 	w := csv.NewWriter(os.Stdout)
 	w.WriteAll(records)
+}
+
+func printJSON(authors sorter.Authors) {
+	data, _ := json.Marshal(authors.Array)
+	fmt.Println(data)
+}
+
+func printJSONLines(authors sorter.Authors) {
+	for _, author := range authors.Array {
+		data, _ := json.Marshal(author)
+		fmt.Println(data)
+	}
 }
