@@ -12,9 +12,11 @@ import (
 var (
 	// Used for flags.
 	filter = &process.Filter{}
+	formatter = &process.Formatter{}
 
 	appContext = &process.Context{
 		Filter: filter,
+		Formatter: formatter,
 	}
 
 	rootCmd = &cobra.Command{
@@ -43,6 +45,14 @@ func init() {
 	} else {
 		appContext.AuthorType = process.AuthorT
 	}
+
+	rootCmd.PersistentFlags().StringSliceVar(&filter.Extensions, "extensions", []string{}, "extensions")
+	rootCmd.PersistentFlags().StringSliceVar(&filter.Languages, "languages", []string{}, "languages")
+	rootCmd.PersistentFlags().StringSliceVar(&filter.Exclude, "exclude", []string{}, "exclude")
+	rootCmd.PersistentFlags().StringSliceVar(&filter.RestrictTo, "restrict-to", []string{}, "restrict-to")
+
+	rootCmd.PersistentFlags().StringVar(&formatter.Format, "format", "tabular", "format")
+	rootCmd.PersistentFlags().StringVar(&formatter.OrderBy, "order-by", "lines", "order-by")
 
 	// rootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "author name for copyright attribution")
 	// rootCmd.PersistentFlags().StringVarP(&userLicense, "license", "l", "", "name of license for the project")

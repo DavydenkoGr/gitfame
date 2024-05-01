@@ -2,10 +2,6 @@ package process
 
 import "os/exec"
 
-type Filter struct {
-	// TODO: implement me
-}
-
 type AuthorType int
 const (
 	AuthorT AuthorType = iota
@@ -17,7 +13,19 @@ type Context struct {
 	Revision   string
 	CurrentDir string
 	Filter     *Filter
-	// TODO: add new fields
+	Formatter *Formatter
+}
+
+type Filter struct {
+	Extensions []string
+	Languages []string
+	Exclude []string
+	RestrictTo []string
+}
+
+type Formatter struct {
+	OrderBy string
+	Format string
 }
 
 type Author struct {
