@@ -5,6 +5,7 @@ import (
 	"github.com/DavydenkoGr/gitfame/pkg/commit"
 )
 
+// main method which collects info about developers activities
 func (c *Context) ParseRepository() author.AuthorDict {
 	filenames := c.ParseTree()
 

@@ -10,11 +10,11 @@ import (
 
 var (
 	// Used for flags.
-	appFilter = &filter.Filter{}
-	appFormatter = &formatter.Formatter{}
-	appContext = &context.Context{
-		Filter: appFilter,
-		Formatter: appFormatter,
+	appFilter = filter.Filter{}
+	appFormatter = formatter.Formatter{}
+	appContext = context.Context{
+		Filter: &appFilter,
+		Formatter: &appFormatter,
 	}
 
 	rootCmd = &cobra.Command{
@@ -32,6 +32,7 @@ func Execute() error {
 	return rootCmd.Execute()
 }
 
+// gitfame initialization
 func init() {
 	// appContext fields init
 	rootCmd.PersistentFlags().StringVar(&appContext.CurrentDir, "repository", ".", "repository")

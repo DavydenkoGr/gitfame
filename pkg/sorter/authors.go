@@ -5,6 +5,7 @@ import (
 	"github.com/DavydenkoGr/gitfame/pkg/author"
 )
 
+// sortable authors array
 type Authors struct {
 	SortKey string
 	Array []*author.Author

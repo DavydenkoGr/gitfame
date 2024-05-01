@@ -2,6 +2,5 @@ package configs
 
 import "os"
 
-var (
-	LanguagesData, _ = os.ReadFile("language_extensions.json")
-)
+// language config content
+var	LanguagesData, _ = os.ReadFile("language_extensions.json")

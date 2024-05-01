@@ -5,6 +5,7 @@ import (
 	"strings"
 )
 
+// method executes console command and cut \n suffix from response
 func (c *Context) ExecuteCommand(name string, args ...string) (string, error) {
 	command := exec.Command(name, args...)
 	command.Dir = c.CurrentDir

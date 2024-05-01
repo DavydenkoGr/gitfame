@@ -1,5 +1,6 @@
 package context
 
+// method parses file headers
 func (c *Context) ParseFileHeader(filename string) map[string]string {
 	hash, _ := c.ExecuteCommand(
 		"git", "log", "--format=%H", "-n 1", filename,

@@ -6,6 +6,8 @@ import (
 	"github.com/DavydenkoGr/gitfame/pkg/formatter"
 )
 
+// main element of a programm. Executes console commands, collect results and
+// print information in stdout
 type Context struct {
 	AuthorType author.AuthorType
 	Revision   string

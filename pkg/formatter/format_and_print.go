@@ -77,12 +77,12 @@ func printCSV(authors sorter.Authors) {
 
 func printJSON(authors sorter.Authors) {
 	data, _ := json.Marshal(authors.Array)
-	fmt.Println(data)
+	fmt.Println(string(data))
 }
 
 func printJSONLines(authors sorter.Authors) {
 	for _, author := range authors.Array {
 		data, _ := json.Marshal(author)
-		fmt.Println(data)
+		fmt.Println(string(data))
 	}
 }
