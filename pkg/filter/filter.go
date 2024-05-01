@@ -1,8 +1,8 @@
 package filter
 
 type Filter struct {
-	Extensions []string
-	Languages []string
+	ExtensionsSet map[string]struct{}
+	LanguagesSet map[string]struct{}
 	Exclude []string
 	RestrictTo []string
 }

@@ -1,11 +1,7 @@
 package cmd
 
 import (
-	// "fmt"
-	// "os"
-
 	"github.com/spf13/cobra"
-	// "github.com/spf13/viper"
 	"github.com/DavydenkoGr/gitfame/pkg/context"
 	"github.com/DavydenkoGr/gitfame/pkg/filter"
 	"github.com/DavydenkoGr/gitfame/pkg/formatter"
@@ -36,8 +32,7 @@ func Execute() error {
 }
 
 func init() {
-	// cobra.OnInitialize(initConfig)
-
+	// appContext fields init
 	rootCmd.PersistentFlags().StringVar(&appContext.CurrentDir, "repository", ".", "repository")
 	rootCmd.PersistentFlags().StringVar(&appContext.Revision, "revision", "HEAD", "revision")
 
@@ -47,44 +42,22 @@ func init() {
 		appContext.AuthorType = context.AuthorT
 	}
 
-	rootCmd.PersistentFlags().StringSliceVar(&appFilter.Extensions, "extensions", []string{}, "extensions")
-	rootCmd.PersistentFlags().StringSliceVar(&appFilter.Languages, "languages", []string{}, "languages")
+	// appFilter fields init
+	extensions := []string{}
+	languages := []string{}
+	rootCmd.PersistentFlags().StringSliceVar(&extensions, "extensions", []string{}, "extensions")
+	rootCmd.PersistentFlags().StringSliceVar(&languages, "languages", []string{}, "languages")
+
+	for _, extension := range extensions {
+		appFilter.ExtensionsSet[extension] = struct{}{}
+	}
+
+	appFilter.InitializeLanguages(languages)
+
 	rootCmd.PersistentFlags().StringSliceVar(&appFilter.Exclude, "exclude", []string{}, "exclude")
 	rootCmd.PersistentFlags().StringSliceVar(&appFilter.RestrictTo, "restrict-to", []string{}, "restrict-to")
 
+	// appFormatter fields init
 	rootCmd.PersistentFlags().StringVar(&appFormatter.Format, "format", "tabular", "format")
 	rootCmd.PersistentFlags().StringVar(&appFormatter.OrderBy, "order-by", "lines", "order-by")
-
-	// rootCmd.PersistentFlags().StringP("author", "a", "YOUR NAME", "author name for copyright attribution")
-	// rootCmd.PersistentFlags().StringVarP(&userLicense, "license", "l", "", "name of license for the project")
-	// rootCmd.PersistentFlags().Bool("viper", true, "use Viper for configuration")
-	// viper.BindPFlag("author", rootCmd.PersistentFlags().Lookup("author"))
-	// viper.BindPFlag("useViper", rootCmd.PersistentFlags().Lookup("viper"))
-	// viper.SetDefault("author", "NAME HERE <EMAIL ADDRESS>")
-	// viper.SetDefault("license", "apache")
-
-	// rootCmd.AddCommand(addCmd)
-	// rootCmd.AddCommand(initCmd)
 }
-
-// func initConfig() {
-// 	if cfgFile != "" {
-// 		// Use config file from the flag.
-// 		viper.SetConfigFile(cfgFile)
-// 	} else {
-// 		// Find home directory.
-// 		home, err := os.UserHomeDir()
-// 		cobra.CheckErr(err)
-
-// 		// Search config in home directory with name ".cobra" (without extension).
-// 		viper.AddConfigPath(home)
-// 		viper.SetConfigType("yaml")
-// 		viper.SetConfigName(".cobra")
-// 	}
-
-// 	viper.AutomaticEnv()
-
-// 	if err := viper.ReadInConfig(); err == nil {
-// 		fmt.Println("Using config file:", viper.ConfigFileUsed())
-// 	}
-// }
