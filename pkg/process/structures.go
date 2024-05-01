@@ -16,7 +16,7 @@ type Context struct {
 	AuthorType AuthorType
 	Revision   string
 	CurrentDir string
-	Filter     Filter
+	Filter     *Filter
 	// TODO: add new fields
 }
 
