@@ -1,8 +1,6 @@
 package formatter
 
 import (
-	"sort"
-
 	"github.com/DavydenkoGr/gitfame/pkg/author"
 	"github.com/DavydenkoGr/gitfame/pkg/sorter"
 )
@@ -17,7 +15,7 @@ func (f *Formatter) FormatAndPrint(authorDict author.AuthorDict) {
 		authors.Array = append(authors.Array, author)
 	}
 
-	sort.Sort(authors)
+	authors.Sort()
 
 	switch f.Format {
 	case "tabular":

@@ -1,6 +1,7 @@
 package sorter
 
 import (
+	"sort"
 	"github.com/DavydenkoGr/gitfame/pkg/author"
 )
 
@@ -52,4 +53,8 @@ func (a Authors) Less(i, j int) bool {
 	}
 
 	return false
+}
+
+func (a *Authors) Sort() {
+	sort.Sort(a)
 }
