@@ -1,4 +1,4 @@
-package context
+package author
 
 type Author struct {
 	Name    string
@@ -8,3 +8,9 @@ type Author struct {
 }
 
 type AuthorDict = map[string]*Author
+
+type AuthorType int
+const (
+	AuthorT AuthorType = iota
+	CommitterT
+)

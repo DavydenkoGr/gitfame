@@ -1,17 +1,22 @@
 package context
 
-func (c *Context) ParseRepository() AuthorDict {
+import (
+	"github.com/DavydenkoGr/gitfame/pkg/author"
+	"github.com/DavydenkoGr/gitfame/pkg/commit"
+)
+
+func (c *Context) ParseRepository() author.AuthorDict {
 	filenames := c.ParseTree()
 
 	authorToCommit := make(map[string]map[string]struct{})
-	authorDict := make(AuthorDict)
+	authorDict := make(author.AuthorDict)
 
 	for _, filename := range filenames {
 		header := c.ParseFileHeader(filename)
 		contentCommitDict:= c.ParseFileContent(filename)
 		
 		if _, ok:= contentCommitDict[header["hash"]]; !ok {
-			contentCommitDict["hash"] = &Commit{
+			contentCommitDict["hash"] = &commit.Commit{
 				AuthorName: header["author"],
 				Lines: 0,
 			}

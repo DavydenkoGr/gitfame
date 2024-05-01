@@ -1,4 +1,4 @@
-package context
+package commit
 
 type Commit struct {
 	AuthorName string

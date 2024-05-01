@@ -1,18 +1,13 @@
 package context
 
 import (
+	"github.com/DavydenkoGr/gitfame/pkg/author"
 	"github.com/DavydenkoGr/gitfame/pkg/filter"
 	"github.com/DavydenkoGr/gitfame/pkg/formatter"
 )
 
-type AuthorType int
-const (
-	AuthorT AuthorType = iota
-	CommitterT
-)
-
 type Context struct {
-	AuthorType AuthorType
+	AuthorType author.AuthorType
 	Revision   string
 	CurrentDir string
 	Filter     *filter.Filter

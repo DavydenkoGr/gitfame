@@ -1,14 +1,18 @@
 package context
 
-import "strings"
+import (
+	"strings"
+	"github.com/DavydenkoGr/gitfame/pkg/author"
+	"github.com/DavydenkoGr/gitfame/pkg/commit"
+)
 
 // method parses file content and count every author lines for all commits
-func (c *Context) ParseFileContent(filename string) CommitDict {
+func (c *Context) ParseFileContent(filename string) commit.CommitDict {
 	response, err := c.ExecuteCommand(
 		"git", "blame", "--porcelain", c.Revision,
 	)
 
-	commitDict := make(CommitDict)
+	commitDict := make(commit.CommitDict)
 	// empty file
 	if len(response) == 0 {
 		return commitDict
@@ -19,10 +23,10 @@ func (c *Context) ParseFileContent(filename string) CommitDict {
 
 	// parse commits info
 	for line := lines[lineIndex]; lineIndex < len(lines); lineIndex++ {
-		if c.AuthorType == AuthorT && strings.HasPrefix(line, "author ") {
+		if c.AuthorType == author.AuthorT && strings.HasPrefix(line, "author ") {
 			hash := strings.Split(lines[lineIndex - 1], " ")[0]
 
-			commitDict[hash] = &Commit{
+			commitDict[hash] = &commit.Commit{
 				AuthorName: line[7:],
 				Lines: 1,
 			}
@@ -30,10 +34,10 @@ func (c *Context) ParseFileContent(filename string) CommitDict {
 			continue
 		}
 
-		if c.AuthorType == CommitterT && strings.HasPrefix(line, "committer ") {
+		if c.AuthorType == author.CommitterT && strings.HasPrefix(line, "committer ") {
 			hash := strings.Split(lines[lineIndex - 5], " ")[0]
 
-			commitDict[hash] = &Commit{
+			commitDict[hash] = &commit.Commit{
 				AuthorName: line[10:],
 				Lines: 1,
 			}
