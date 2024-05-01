@@ -1,11 +1,11 @@
 package context
 
 func (c *Context) ParseFileHeader(filename string) map[string]string {
-	hash, err := c.ExecuteCommand(
+	hash, _ := c.ExecuteCommand(
 		"git", "log", "--format=%H", "-n 1", filename,
 	)
 
-	author, err := c.ExecuteCommand(
+	author, _ := c.ExecuteCommand(
 		"git", "log", "--format=%an", "-n 1", filename,
 	)
 

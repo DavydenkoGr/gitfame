@@ -1,10 +1,11 @@
 package cmd
 
 import (
-	"github.com/spf13/cobra"
+	"github.com/DavydenkoGr/gitfame/pkg/author"
 	"github.com/DavydenkoGr/gitfame/pkg/context"
 	"github.com/DavydenkoGr/gitfame/pkg/filter"
 	"github.com/DavydenkoGr/gitfame/pkg/formatter"
+	"github.com/spf13/cobra"
 )
 
 var (
@@ -21,7 +22,7 @@ var (
 		Short: "gitfame",
 		Long: "gitfame",
 		Run: func(cmd *cobra.Command, args []string) {
-			authorDict := appContext.ParseRepository()
+			appContext.RunApp()
 		},
 	}
 )
@@ -37,9 +38,9 @@ func init() {
 	rootCmd.PersistentFlags().StringVar(&appContext.Revision, "revision", "HEAD", "revision")
 
 	if *rootCmd.PersistentFlags().Bool("use-committer", false, "use-committer") {
-		appContext.AuthorType = context.CommitterT
+		appContext.AuthorType = author.CommitterT
 	} else {
-		appContext.AuthorType = context.AuthorT
+		appContext.AuthorType = author.AuthorT
 	}
 
 	// appFilter fields init

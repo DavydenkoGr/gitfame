@@ -8,7 +8,7 @@ import (
 
 // method parses file content and count every author lines for all commits
 func (c *Context) ParseFileContent(filename string) commit.CommitDict {
-	response, err := c.ExecuteCommand(
+	response, _ := c.ExecuteCommand(
 		"git", "blame", "--porcelain", c.Revision,
 	)
 
